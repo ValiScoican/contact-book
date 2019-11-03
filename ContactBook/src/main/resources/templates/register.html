@@ -1,0 +1,51 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8" />
+	<link rel="stylesheet"
+		  href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+		  crossorigin="anonymous">
+	<title>Register</title>
+</head>
+<body>
+<div class="container">
+	<div style="width: 600px; margin-left: auto; margin-right: auto; margin-top: 24px; padding: 24px;">
+		<div class="card">
+			<div class="card-header">
+				<i class="fa fa-user">Registration page</i>
+			</div>
+			<div class="card-block" style="padding: 24px;">
+				<form th:action="@{/user/registration}" th:object="${user}" method="POST" enctype="utf8">
+					<div class="form-group">
+						<label >Username</label>
+						<input class="form-control" th:field="*{username}" required/>
+						<p th:each="error: ${#fields.errors('username')}"
+						   th:text="${error}">Validation error</p>
+					</div>
+					<div class="form-group">
+						<label>E-mail address</label>
+						<input class="form-control" type="email" th:field="*{email}" required/>
+						<p th:each="error : ${#fields.errors('email')}"
+						   th:text="${error}">Validation error</p>
+					</div>
+					<div class="form-group">
+						<label>Password</label>
+						<input class="form-control" type="password" th:field="*{password}" required/>
+						<p th:each="error : ${#fields.errors('password')}"
+						   th:text="${error}">Validation error</p>
+					</div>
+					<div class="form-group">
+						<label>Confirm password</label>
+						<input class="form-control" type="password" th:field="*{matchingPassword}" required/>
+					</div>
+					<div class="form-actions" style="margin-top: 12px;">
+						<button type="submit" class="btn btn-success">Register</button>
+					</div>
+				</form>
+				<a th:href="@{/login}">Login</a>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>
