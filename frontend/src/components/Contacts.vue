@@ -25,6 +25,8 @@
           </tr>
         </tbody>
     </table>
+    <button class="btn btn-light" v-if="currentPage > 0" v-on:click="handlePaginationButton(false)">Back</button>    
+    <button class="btn btn-light" v-if="contacts.length !== 0" v-on:click="handlePaginationButton(true)">Next</button>
   </div>
 </template>
 
@@ -36,15 +38,17 @@
       return {
         contacts: [],
         alert:'',
-        filterInput:''
+        filterInput:'',
+        currentPage: 0,
+        pageLimit: 10,
       }
     },
     methods: {
       fetchContacts(){
-        fetch('http://localhost:8080/contacts')
+        fetch(`http://localhost:8080/contacts?page=${this.currentPage}&limit=${this.pageLimit}`)
           .then(response => {
             if (response.status !== 200) {
-              this.alert = 'Please log in!!!!'
+              this.alert = 'Please log in!!!!';
             }
             return response.json();
           })
@@ -58,6 +62,14 @@
         return list.filter(function(contact){
           return contact.lastName.indexOf(value) > -1 || contact.firstName.indexOf(value) > -1;
         });
+      },
+      handlePaginationButton(isNext) {
+        if (isNext) {
+          this.currentPage++;
+        } else {
+          this.currentPage--;
+        }
+        this.fetchContacts();
       }
     },
     created: function(){

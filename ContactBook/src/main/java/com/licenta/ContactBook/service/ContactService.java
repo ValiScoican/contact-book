@@ -8,6 +8,8 @@ import com.licenta.ContactBook.repository.ContactRepository;
 import com.licenta.ContactBook.repository.UserRepository;
 import com.licenta.ContactBook.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
@@ -24,8 +26,9 @@ public class ContactService {
     @Autowired
     private UserRepository userRepository;
 
-    public List<ContactDAO> getAllContacts(Long Id){
-        return contactRepository.findAllByUserId(Id).stream().map((Contact contact) -> {
+    public List<ContactDAO> getAllContacts(Long Id, int page, int limit) {
+    	Pageable pageRequest = PageRequest.of(page, limit);
+        return contactRepository.findAllByUserId(Id, pageRequest).stream().map((Contact contact) -> {
             return new ContactDAO(
                     contact.getId(),
                     contact.getAddress(),

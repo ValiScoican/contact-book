@@ -84,16 +84,16 @@ public class MainController {
 			throw new UserAlreadyExistsException("User with this username or e-mail already exists!");
 		} else {
 			userService.addUser(registered);
-
-//			SimpleMailMessage msg = new SimpleMailMessage();
-//			msg.setTo(email);
-//
-//			msg.setSubject("Succesful reg.");
-//			msg.setText("Hello World \n Spring Boot Email");
-//
-//			javaMailSender.send(msg);
-
+//			sendMail(email);
 			return "login";
 		}
     }
+
+	private void sendMail(String email) {
+		SimpleMailMessage msg = new SimpleMailMessage();
+		msg.setTo(email);
+		msg.setSubject("Succesful reg.");
+		msg.setText("Hello World \n Spring Boot Email");
+		javaMailSender.send(msg);
+	}
 }

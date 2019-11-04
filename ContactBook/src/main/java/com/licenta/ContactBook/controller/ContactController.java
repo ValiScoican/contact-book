@@ -18,9 +18,9 @@ public class ContactController {
     private ContactService contactService;
 
     @GetMapping("/contacts")
-    public List<ContactDAO> getAllContacts(){
+    public List<ContactDAO> getAllContacts(@RequestParam("page") int page, @RequestParam("limit") int limit) {
         UserPrincipal principal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return contactService.getAllContacts(principal.getId());
+        return contactService.getAllContacts(principal.getId(), page, limit);
     }
 
     @GetMapping("/contact")
