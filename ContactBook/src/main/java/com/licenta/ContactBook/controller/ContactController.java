@@ -6,11 +6,9 @@ import com.licenta.ContactBook.model.Contact;
 import com.licenta.ContactBook.security.UserPrincipal;
 import com.licenta.ContactBook.service.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -38,7 +36,6 @@ public class ContactController {
     @PostMapping("/contact/add")
     public void addContact(@RequestBody ContactDAO newContact) {
         UserPrincipal principal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        System.out.println(principal.getId());
         contactService.addNewContact(principal.getId(), newContact);
     }
 

@@ -1,14 +1,11 @@
 package com.licenta.ContactBook.model;
 
-
 import lombok.Data;
 
 import javax.persistence.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.LinkedList;
 import java.util.List;
 
 @Entity
@@ -56,10 +53,6 @@ public class User {
     }
 
     public User(){}
-
-//    public long getId() {
-//        return id;
-//    }
 
     public String getEmail() {
         return email;

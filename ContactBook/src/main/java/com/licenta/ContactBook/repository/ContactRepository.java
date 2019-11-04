@@ -1,7 +1,6 @@
 package com.licenta.ContactBook.repository;
 
 import com.licenta.ContactBook.model.Contact;
-import com.licenta.ContactBook.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

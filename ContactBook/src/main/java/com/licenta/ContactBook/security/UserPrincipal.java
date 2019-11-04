@@ -11,7 +11,12 @@ import java.util.Collection;
 import java.util.List;
 
 public class UserPrincipal implements UserDetails {
-    private User user;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7485624464917722758L;
+	
+	private User user;
 
     public UserPrincipal(User user){
         this.user = user;
