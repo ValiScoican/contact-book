@@ -26,7 +26,7 @@
         </tbody>
     </table>
     <button class="btn btn-light" v-if="currentPage > 0" v-on:click="handlePaginationButton(false)">Back</button>    
-    <button class="btn btn-light" v-if="contacts.length === 10" v-on:click="handlePaginationButton(true)">Next</button>
+    <button class="btn btn-light" v-if="contacts.length === pageLimit" v-on:click="handlePaginationButton(true)">Next</button>
   </div>
 </template>
 
@@ -40,7 +40,7 @@
         alert:'',
         filterInput:'',
         currentPage: 0,
-        pageLimit: 10,
+        pageLimit: 5,
       }
     },
     methods: {
