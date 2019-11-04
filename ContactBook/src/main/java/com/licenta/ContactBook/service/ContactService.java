@@ -1,6 +1,6 @@
 package com.licenta.ContactBook.service;
 
-import com.licenta.ContactBook.dao.ContactDAO;
+import com.licenta.ContactBook.dao.ContactDTO;
 import com.licenta.ContactBook.exceptions.InvalidDataException;
 import com.licenta.ContactBook.model.Contact;
 import com.licenta.ContactBook.model.User;
@@ -26,10 +26,10 @@ public class ContactService {
     @Autowired
     private UserRepository userRepository;
 
-    public List<ContactDAO> getAllContacts(Long Id, int page, int limit) {
+    public List<ContactDTO> getAllContacts(Long Id, int page, int limit) {
     	Pageable pageRequest = PageRequest.of(page, limit);
         return contactRepository.findAllByUserId(Id, pageRequest).stream().map((Contact contact) -> {
-            return new ContactDAO(
+            return new ContactDTO(
                     contact.getId(),
                     contact.getAddress(),
                     contact.getFirstName(),
@@ -41,8 +41,8 @@ public class ContactService {
     public Contact getContactById(Long Id) throws InvalidDataException {
         UserPrincipal prn = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Contact contact = contactRepository.findContactById(Id);
-        if (contact.getUser().getUserId() == prn.getId()) {
-            throw new InvalidDataException("AAAAA");
+        if (contact.getUser().getUserId() != prn.getId()) {
+            throw new InvalidDataException("Invalid data for current user!");
         } else {
             return contact;
         }
@@ -51,14 +51,14 @@ public class ContactService {
     public void deleteContactById(Long Id) throws InvalidDataException {
         UserPrincipal prn = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Contact contact = contactRepository.findContactById(Id);
-        if (contact.getUser().getUserId() == prn.getId()) {
-            throw new InvalidDataException("AAAAA");
+        if (contact.getUser().getUserId() != prn.getId()) {
+            throw new InvalidDataException("Invalid data for current user!");
         } else {
             contactRepository.deleteById(Id);
         }
     }
 
-    public void addNewContact(Long userId, ContactDAO newContact) {
+    public void addNewContact(Long userId, ContactDTO newContact) {
         Optional<User> user = userRepository.findById(userId);
         //The purpose of the class (Optional) is to provide a type-level solution
         // for representing optional values instead of null references.
@@ -73,12 +73,12 @@ public class ContactService {
         contactRepository.save(contact);
     }
 
-    public void updateContact(Long id, ContactDAO contact) throws InvalidDataException {
+    public void updateContact(Long id, ContactDTO contact) throws InvalidDataException {
         UserPrincipal prn = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Optional<Contact> current = contactRepository.findById(id);
         Contact cont = current.get();
-        if (cont.getUser().getUserId() == prn.getId()) {
-            throw new InvalidDataException("AAAAA");
+        if (cont.getUser().getUserId() != prn.getId()) {
+            throw new InvalidDataException("Invalid data for current user!");
         } else {
             cont.setAddress(contact.getAddress());
             cont.setFirstName(contact.getFirstName());

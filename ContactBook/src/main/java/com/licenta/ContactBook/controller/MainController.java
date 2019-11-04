@@ -1,8 +1,8 @@
 package com.licenta.ContactBook.controller;
 
+import com.licenta.ContactBook.dao.UserDTO;
 import com.licenta.ContactBook.exceptions.UserAlreadyExistsException;
 import com.licenta.ContactBook.model.User;
-import com.licenta.ContactBook.model.UserDto;
 import com.licenta.ContactBook.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -57,7 +57,7 @@ public class MainController {
 	 */
     @RequestMapping(value = "/user/registration", method = RequestMethod.GET)
     public String showRegistrationForm(WebRequest request, Model model) {
-        UserDto userDto = new UserDto();
+        UserDTO userDto = new UserDTO();
         model.addAttribute("user", userDto);
         return "register";
     }
@@ -69,14 +69,14 @@ public class MainController {
 	 * @return redirect to login page
 	 */
 	@RequestMapping(value = "/user/registration", method = RequestMethod.POST)
-    public String registerUserAccount (@ModelAttribute("user") @Valid UserDto accountDto) throws UserAlreadyExistsException {
+    public String registerUserAccount (@ModelAttribute("user") @Valid UserDTO accountDto) throws UserAlreadyExistsException {
 		String username = accountDto.getUsername();
 		String email = accountDto.getEmail();
 		User registered = new User(
 				username,
 				new BCryptPasswordEncoder().encode(accountDto.getPassword()),
 				email,
-				"ROLE_USER",
+				"USER",
 				"");
 
        	User usr = userService.getUserByUsername(username);

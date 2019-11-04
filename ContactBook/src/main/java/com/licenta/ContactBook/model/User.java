@@ -1,6 +1,7 @@
 package com.licenta.ContactBook.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -12,15 +13,13 @@ import java.util.List;
 // @Entity Annotation is used to declared the object as an entity.
 @Table(name = "users")
 //The @Table annotation allows you to specify the details of the table that will be used to persist the entity in the database.
-@Data
 //Auto generate getter, setter
+@Data
+@NoArgsConstructor
 public class User {
 
     //Will only declare the primary key
     //@Id Annotation is for denoting the Long id value as an identifier of the table.
-
-
-
     // @GeneratedValue is for declaring the id values is a generated value and the user
     // do not have to provide the value of id while inserting into the database.
     // Strategy is property declared as AUTO.
@@ -28,9 +27,6 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    /**
-     *
-     */
     private String username;
 
     private String password;
@@ -50,28 +46,6 @@ public class User {
         this.roles = roles;
         this.permissions = permissions;
         this.active = 1;
-    }
-
-    public User(){}
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public int getActive() {
-        return active;
     }
 
     public long getUserId() {

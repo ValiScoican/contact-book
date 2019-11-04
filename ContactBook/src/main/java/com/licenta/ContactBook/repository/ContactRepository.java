@@ -8,7 +8,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import java.util.List;
 
 public interface ContactRepository extends PagingAndSortingRepository<Contact, Long> {
-    // Citeste despre Spring JPA convention.
     List<Contact> findAllByUserId(Long Id, Pageable pageable);
 
     Contact findContactById(Long Id);

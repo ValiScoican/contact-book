@@ -10,19 +10,30 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 import java.util.Collections;
 
+/**
+ * Main class for Spring Boot application.
+ */
 @SpringBootApplication
 public class ContactBookApplication {
 
+	/**
+	 * Run application.
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		SpringApplication.run(ContactBookApplication.class, args);
 	}
 
+	/**
+	 * Disabling CORS for 3rd party apps.
+	 * @return bean.
+	 */
 	@Bean
 	public FilterRegistrationBean<CorsFilter> simpleCorsFilter() {
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		CorsConfiguration config = new CorsConfiguration();
 		config.setAllowCredentials(true);
-		// *** URL below needs to match the Vue client URL and port ***
+		// For DEV. Using vuejs server.
 		config.setAllowedOrigins(Collections.singletonList("http://localhost:8000"));
 		config.setAllowedMethods(Collections.singletonList("*"));
 		config.setAllowedHeaders(Collections.singletonList("*"));
